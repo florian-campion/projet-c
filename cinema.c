@@ -19,7 +19,7 @@ int main(void)
     {
         n = 2;
     }
-    else if (age > 11 && age < 17)
+    else if (age >= 11 && age < 17)
     {
         n = 1;
     }
