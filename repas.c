@@ -15,6 +15,7 @@ int main(void)
     {
         return 1;
     }
+    
     char repas[50];
     //on va tester si le fichier est vide et si il est pas vide on afficche le contenu du fichier
     if (testfichiervide(file) == 1)
@@ -22,13 +23,16 @@ int main(void)
         printf("Votre liste est vide\n");
     }
     else
-    {
+    {   
+        //on va utiliser fseek pour positioner le pointeur a tel emplacement du fichier, donc la au debut pour bien imprimer a partir du debut de la liste
+        fseek(file, 0, SEEK_SET);
         printf("Voici votre liste de repas :\n");
         while (fgets(repas, 50, file) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
         {
             printf("%s", repas); // On affiche les repas qu'on vient de lire
         }
     }
+   
     //on saisit le nombre de repas que l'on veut ajouter au fichhier
     int n = get_int("Combien de repas voulez-vous ajouter a votre liste de repas?\n");
     for (int i = 0; i < n ; i++)
@@ -40,6 +44,7 @@ int main(void)
         fprintf(file, "%s\n", repas);
 
     }
+     
     //petite phrase de fin de programme
     printf("\nN'oubliez pas d'ajouter plus de repas pour avoir une liste de plus en plus complete!\n");
     //fermeture du fichier
@@ -50,8 +55,8 @@ int main(void)
 
 int testfichiervide(FILE *file)
 {   
-    //on va utiliser fseek pour positioner le pointeur a tel emplacement du fichier, donc la au debut
-    fseek(file, 0, SEEK_SET);
+    //on va utiliser fseek pour positioner le pointeur a tel emplacement du fichier, donc la a la fin
+    fseek(file, 0, SEEK_END);
     //puis avec ftell on donne la valeur situe a cet emplacement du fichier
     if (ftell(file) == 0)
     {
